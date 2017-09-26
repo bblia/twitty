@@ -11,9 +11,11 @@ import UIKit
 class Tweet: NSObject {
     
     var text: String? = ""
-    var timestamp: Date?
+    var timestamp: String?
     var retweetCount: Int = 0
     var favoritesCount: Int = 0
+    var user: User?
+
     
     init(dictionary: NSDictionary) {
         text = dictionary["text"] as? String
@@ -24,8 +26,16 @@ class Tweet: NSObject {
 
         if let timestampString = timeStampString {
             let formatter = DateFormatter()
-            formatter.dateFormat = "EEE MMM d HH:mm:ss Z y"
-            timestamp = formatter.date(from: timestampString)
+            formatter.dateFormat = "EEE MMM d H:mm:ss Z y"
+            let timestampDate = formatter.date(from: timestampString)
+            
+            let dateFormatterPrint = DateFormatter()
+            dateFormatterPrint.dateFormat = "MMM dd, yyyy"
+            self.timestamp = dateFormatterPrint.string(from: timestampDate!)
+        }
+        
+        if let user = dictionary["user"] as? NSDictionary {
+            self.user = User(dictionary: user)
         }
     }
 
