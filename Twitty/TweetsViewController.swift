@@ -21,16 +21,12 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 140
         
-        TwitterClient.sharedInstance.homeTimeline(success: {(tweets: [Tweet]) -> () in
-            self.tweets = tweets
-            for tweet in tweets {
-                print(tweet.text)
-            }
-            self.tableView.reloadData()
-            
-        }, failure: { (error: Error) ->() in
-            print(error.localizedDescription)
-        })
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
+        tableView.insertSubview(refreshControl, at: 0)
+        
+        fetchData(refreshControl: refreshControl)
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,5 +58,21 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func refreshControlAction(_ refreshControl: UIRefreshControl) {
+        
+        fetchData(refreshControl: refreshControl)
+    }
+    
+    func fetchData(refreshControl: UIRefreshControl) {
+        TwitterClient.sharedInstance.homeTimeline(success: {(tweets: [Tweet]) -> () in
+            self.tweets = tweets
+            self.tableView.reloadData()
+            refreshControl.endRefreshing()
+            
+        }, failure: { (error: Error) ->() in
+            print(error.localizedDescription)
+        })
+    }
 
 }
