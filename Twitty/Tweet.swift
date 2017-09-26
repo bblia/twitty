@@ -10,7 +10,7 @@ import UIKit
 
 class Tweet: NSObject {
     
-    var text: String?
+    var text: String? = ""
     var timestamp: Date?
     var retweetCount: Int = 0
     var favoritesCount: Int = 0
