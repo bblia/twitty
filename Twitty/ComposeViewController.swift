@@ -8,6 +8,10 @@
 
 import UIKit
 
+@objc protocol ComposeViewControllerDelegate {
+    @objc func composeViewController(composeViewController: ComposeViewController,
+                                     tweet: Tweet)
+}
 class ComposeViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var profileImage: UIImageView!
@@ -18,7 +22,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     
     var user = User.currentUser!
     var replyTo: Tweet?
-    
+    var delegate: ComposeViewControllerDelegate?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -56,8 +61,9 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     }
     */
     @IBAction func onTweetButton(_ sender: Any) {
-        TwitterClient.sharedInstance.composeTweet(tweetTextView.text, replyStatusId: replyTo?.id, success: { (Tweet) in
+        TwitterClient.sharedInstance.composeTweet(tweetTextView.text, replyStatusId: replyTo?.id, success: { (tweet: Tweet) in
             self.dismiss(animated: true, completion: nil)
+            self.delegate?.composeViewController(composeViewController: self, tweet: tweet)
         }) { (error: Error!) in
             print("Error: \(error.localizedDescription)")
         }

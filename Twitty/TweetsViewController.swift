@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ComposeViewControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     var tweets: [Tweet]!
@@ -20,7 +20,6 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 140
-        
         
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
@@ -62,6 +61,18 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
             vc.tweet = tweets![indexPath!.row]
         }
         
+        if let navVC = segue.destination as? UINavigationController {
+            let composeVc = navVC.viewControllers.first as! ComposeViewController
+            composeVc.delegate = self
+        }
+
+        
+    }
+    
+    func composeViewController(composeViewController: ComposeViewController, tweet: Tweet) {
+        self.tweets.insert(tweet, at: 0)
+     //   let indexPath = IndexPath(row: 0, section: 0)
+        tableView.reloadData()
     }
     
     
