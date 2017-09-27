@@ -56,7 +56,11 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        
+        if let vc = segue.destination as? DetailsViewController {
+            let cell = sender as! UITableViewCell
+            let indexPath = tableView.indexPath(for: cell)
+            vc.tweet = tweets![indexPath!.row]
+        }
         
     }
     

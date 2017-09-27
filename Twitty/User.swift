@@ -11,7 +11,7 @@ import UIKit
 class User: NSObject {
     
     var name: String?
-    var screenname: String?
+    var screenname: String!
     var profileUrl: URL?
     var tagline: String?
     
@@ -23,7 +23,7 @@ class User: NSObject {
         self.dictionary = dictionary
         
         name = dictionary["name"] as? String
-        screenname = dictionary["screen_name"] as? String
+        screenname = dictionary["screen_name"] as! String
         
         let profileUrlString = dictionary["profile_image_url_https"] as? String
         if let profileUrlString = profileUrlString {

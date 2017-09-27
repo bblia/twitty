@@ -17,6 +17,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var charCountLabel: UILabel!
     
     var user = User.currentUser!
+    var replyTo: Tweet?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +29,9 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         tweetTextView.becomeFirstResponder()
 
         // Do any additional setup after loading the view.
+        if let replyTo = replyTo {
+            tweetTextView.text = "@\((replyTo.user!.screenname!))"
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,7 +56,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     }
     */
     @IBAction func onTweetButton(_ sender: Any) {
-        TwitterClient.sharedInstance.composeTweet(tweetTextView.text, success: { (Tweet) in
+        TwitterClient.sharedInstance.composeTweet(tweetTextView.text, replyStatusId: replyTo?.id, success: { (Tweet) in
             self.dismiss(animated: true, completion: nil)
         }) { (error: Error!) in
             print("Error: \(error.localizedDescription)")

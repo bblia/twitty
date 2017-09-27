@@ -83,11 +83,13 @@ class TwitterClient: BDBOAuth1SessionManager {
 
     }
     
-    func composeTweet(_ status: String, success: @escaping (Tweet) -> (), failure: @escaping (Error?) -> ()) {
+    func composeTweet(_ status: String, replyStatusId: AnyObject?, success: @escaping (Tweet) -> (), failure: @escaping (Error?) -> ()) {
+        var parameters = ["status": status as AnyObject]
+        if let replyStatusId = replyStatusId {
+            parameters["in_reply_to_status_id"] = replyStatusId as AnyObject
+        }
         post("/1.1/statuses/update.json",
-            parameters: [
-                "status": status as AnyObject
-            ],
+            parameters: parameters,
             progress: nil,
             success: { (task, response) in
                 let tweetDict = response as! NSDictionary
@@ -96,6 +98,70 @@ class TwitterClient: BDBOAuth1SessionManager {
             }, failure: { (task, error) in
                 failure(error)
             })
+    }
+    
+    func favoriteTweet(tweet: Tweet, success: @escaping (Tweet) -> (), failure: @escaping (Error?) -> ()) {
+        let tweetId = tweet.id!
+        print(tweetId)
+        post("/1.1/favorites/create.json",
+            parameters: [
+                "id": tweetId as AnyObject
+            ],
+            progress: nil,
+            success: { (task, response) in
+                let tweetDict = response as! NSDictionary
+                let tweet = Tweet(dictionary: tweetDict)
+                success(tweet)
+        },  failure: { (task, error) in
+            failure(error)
+        })
+    }
+    
+    func unfavoriteTweet(tweet: Tweet, success: @escaping (Tweet) -> (), failure: @escaping (Error?) -> ()) {
+        let tweetId = tweet.id!
+        print(tweetId)
+        post("/1.1/favorites/destroy.json",
+             parameters: [
+                "id": tweetId as AnyObject
+            ],
+             progress: nil,
+             success: { (task, response) in
+                let tweetDict = response as! NSDictionary
+                let tweet = Tweet(dictionary: tweetDict)
+                success(tweet)
+        },  failure: { (task, error) in
+            failure(error)
+        })
+    }
+    
+    func retweet(tweet: Tweet, success: @escaping (Tweet) -> (), failure: @escaping (Error?) -> ()) {
+        let tweetId = tweet.id!
+        print(tweetId)
+        post("/1.1/statuses/retweet/\(tweet.id!).json",
+            parameters: nil,
+            progress: nil,
+            success: { (task, response) in
+                let tweetDict = response as! NSDictionary
+                let tweet = Tweet(dictionary: tweetDict)
+                success(tweet)
+        },  failure: { (task, error) in
+            failure(error)
+        })
+    }
+    
+    func unretweet(tweet: Tweet, success: @escaping (Tweet) -> (), failure: @escaping (Error?) -> ()) {
+        let tweetId = tweet.id!
+        print(tweetId)
+        post("/1.1/statuses/unretweet/\(tweet.id!).json",
+            parameters: nil,
+            progress: nil,
+            success: { (task, response) in
+                let tweetDict = response as! NSDictionary
+                let tweet = Tweet(dictionary: tweetDict)
+                success(tweet)
+        },  failure: { (task, error) in
+            failure(error)
+        })
     }
 
 }
