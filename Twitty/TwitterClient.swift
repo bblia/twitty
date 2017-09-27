@@ -82,5 +82,20 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
 
     }
+    
+    func composeTweet(_ status: String, success: @escaping (Tweet) -> (), failure: @escaping (Error?) -> ()) {
+        post("/1.1/statuses/update.json",
+            parameters: [
+                "status": status as AnyObject
+            ],
+            progress: nil,
+            success: { (task, response) in
+                let tweetDict = response as! NSDictionary
+                let tweet = Tweet(dictionary: tweetDict)
+                success(tweet)
+            }, failure: { (task, error) in
+                failure(error)
+            })
+    }
 
 }

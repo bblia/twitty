@@ -52,7 +52,11 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     }
     */
     @IBAction func onTweetButton(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
+        TwitterClient.sharedInstance.composeTweet(tweetTextView.text, success: { (Tweet) in
+            self.dismiss(animated: true, completion: nil)
+        }) { (error: Error!) in
+            print("Error: \(error.localizedDescription)")
+        }
     }
     @IBAction func onCancelButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
