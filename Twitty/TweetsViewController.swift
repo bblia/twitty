@@ -8,10 +8,12 @@
 
 import UIKit
 
-class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ComposeViewControllerDelegate {
+class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ComposeViewControllerDelegate, UIScrollViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     var tweets: [Tweet]!
+    
+    var isMoreDataLoading = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +48,29 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     
     @IBAction func onLogout(_ sender: Any) {
         TwitterClient.sharedInstance.logout()
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            let scrollViewContentHeight = tableView.contentSize.height
+            let scrollViewOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+            
+            if (scrollView.contentOffset.y > scrollViewOffsetThreshold && tableView.isDragging) {
+                isMoreDataLoading = true
+                let maxId = tweets[tweets.count - 1].id
+                TwitterClient.sharedInstance.homeTimeline(maxId: maxId, success: { (tweets: [Tweet]) in
+                    var tweetMinusOne = tweets
+                    tweetMinusOne.remove(at: 0)
+                    for tweet in tweetMinusOne {
+                        self.tweets.append(tweet)
+                    }
+                    self.tableView.reloadData()
+                    self.isMoreDataLoading = false
+                }, failure: { (error: Error) in
+                    print("Error: \(error.localizedDescription)")
+                })
+            }
+        }
     }
 
     
@@ -82,7 +107,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func fetchData(refreshControl: UIRefreshControl) {
-        TwitterClient.sharedInstance.homeTimeline(success: {(tweets: [Tweet]) -> () in
+        TwitterClient.sharedInstance.homeTimeline(maxId: nil, success: {(tweets: [Tweet]) -> () in
             self.tweets = tweets
             self.tableView.reloadData()
             refreshControl.endRefreshing()

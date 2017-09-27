@@ -15,7 +15,7 @@ class Tweet: NSObject {
     var retweetCount: Int = 0
     var favoritesCount: Int = 0
     var user: User?
-    var id: AnyObject?
+    var id: AnyObject
     var favorited: Bool
     var retweeted: Bool
 

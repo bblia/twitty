@@ -61,7 +61,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     }
     */
     @IBAction func onTweetButton(_ sender: Any) {
-        TwitterClient.sharedInstance.composeTweet(tweetTextView.text, replyStatusId: replyTo?.id, success: { (tweet: Tweet) in
+        TwitterClient.sharedInstance.composeTweet(tweetTextView.text, replyStatusId: replyTo?.id as AnyObject, success: { (tweet: Tweet) in
             self.dismiss(animated: true, completion: nil)
             self.delegate?.composeViewController(composeViewController: self, tweet: tweet)
         }) { (error: Error!) in
