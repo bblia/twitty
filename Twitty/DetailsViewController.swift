@@ -13,25 +13,36 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var screennameLabel: UILabel!
-    @IBOutlet weak var tweetLabel: UILabel!
+    @IBOutlet weak var tweetLabel: UITextView!
     @IBOutlet weak var timestampLabel: UILabel!
     @IBOutlet weak var retweetsLabel: UILabel!
     @IBOutlet weak var favoritesLabel: UILabel!
+    
+    @IBOutlet weak var replyButton: UIButton!
+    
+    @IBOutlet weak var retweetButton: UIButton!
+    
+    @IBOutlet weak var likeButton: UIButton!
+    
     
     var tweet: Tweet!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        profileImageView.setImageWith((tweet.user?.profileUrl)!)
         nameLabel.text = tweet.user?.name
-        screennameLabel.text = tweet.user?.screenname
+        screennameLabel.text = ("@\((tweet.user?.screenname)!)")
         tweetLabel.text = tweet.text
         timestampLabel.text = tweet.timestamp
         retweetsLabel.text = tweet.retweetCount.description
         favoritesLabel.text = tweet.favoritesCount.description
-        
-        // Do any additional setup after loading the view.
+
+        profileImageView.setImageWith((tweet.user?.profileUrl)!)
+        profileImageView.layer.cornerRadius = 22
+        profileImageView.layer.borderWidth = 1.0
+        profileImageView.layer.masksToBounds = false
+        profileImageView.layer.borderColor = UIColor.white.cgColor
+        profileImageView.clipsToBounds = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -49,6 +60,9 @@ class DetailsViewController: UIViewController {
                 self.tweet = tweet
                 self.tweet.retweetCount -= 1
                 self.retweetsLabel.text = self.tweet.retweetCount.description
+                let btnImage = UIImage(named: "retweet")
+                self.retweetButton.setImage(btnImage, for: UIControlState.normal)
+
             }) { (error: Error!) in
                 print("Error: \(error.localizedDescription)")
             }
@@ -56,6 +70,8 @@ class DetailsViewController: UIViewController {
             TwitterClient.sharedInstance.retweet(tweet: tweet, success: { (tweet: Tweet!) in
                 self.tweet = tweet
                 self.retweetsLabel.text = self.tweet.retweetCount.description
+                let btnImage = UIImage(named: "retweet_filled")
+                self.retweetButton.setImage(btnImage, for: UIControlState.normal)
             }) { (error: Error!) in
                 print("Error: \(error.localizedDescription)")
             }
@@ -67,6 +83,9 @@ class DetailsViewController: UIViewController {
             TwitterClient.sharedInstance.unfavoriteTweet(tweet: tweet, success: { (tweet: Tweet!) in
                 self.tweet = tweet
                 self.favoritesLabel.text = self.tweet.favoritesCount.description
+                let btnImage = UIImage(named: "like")
+                self.likeButton.setImage(btnImage, for: UIControlState.normal)
+
             }) { (error: Error!) in
                 print("Error: \(error.localizedDescription)")
             }
@@ -74,6 +93,9 @@ class DetailsViewController: UIViewController {
             TwitterClient.sharedInstance.favoriteTweet(tweet: tweet, success: { (tweet: Tweet!) in
                 self.tweet = tweet
                 self.favoritesLabel.text = self.tweet.favoritesCount.description
+                let btnImage = UIImage(named: "like_filled")
+                self.likeButton.setImage(btnImage, for: UIControlState.normal)
+
             }) { (error: Error!) in
                 print("Error: \(error.localizedDescription)")
             }

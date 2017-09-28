@@ -23,6 +23,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 140
         
+        
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshControlAction(_:)), for: UIControlEvents.valueChanged)
         tableView.insertSubview(refreshControl, at: 0)
@@ -37,7 +38,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
-        
+        cell.selectionStyle = .none
         cell.tweet = tweets![indexPath.row]
         return cell
     }
@@ -96,7 +97,6 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     
     func composeViewController(composeViewController: ComposeViewController, tweet: Tweet) {
         self.tweets.insert(tweet, at: 0)
-     //   let indexPath = IndexPath(row: 0, section: 0)
         tableView.reloadData()
     }
     

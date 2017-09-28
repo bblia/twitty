@@ -28,7 +28,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         
         nameLabel.text = user.name
-        screennameLabel.text = user.screenname
+        screennameLabel.text = ("@\(user.screenname!)")
         profileImage.setImageWith(user.profileUrl!)
         tweetTextView.delegate = self
         tweetTextView.becomeFirstResponder()
@@ -61,7 +61,15 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     }
     */
     @IBAction func onTweetButton(_ sender: Any) {
-        TwitterClient.sharedInstance.composeTweet(tweetTextView.text, replyStatusId: replyTo?.id as AnyObject, success: { (tweet: Tweet) in
+        
+        let replyToId: IntMax?
+        if (replyTo == nil) {
+            replyToId = nil;
+        } else {
+            replyToId = replyTo?.id
+        }
+        
+        TwitterClient.sharedInstance.composeTweet(tweetTextView.text, replyStatusId: replyToId as IntMax?, success: { (tweet: Tweet) in
             self.dismiss(animated: true, completion: nil)
             self.delegate?.composeViewController(composeViewController: self, tweet: tweet)
         }) { (error: Error!) in

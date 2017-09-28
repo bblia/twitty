@@ -13,15 +13,19 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var thumbImageView: UIImageView!
     @IBOutlet weak var timestampLabel: UILabel!
     @IBOutlet weak var tweetNameLabel: UILabel!
-    @IBOutlet weak var tweetLabel: UILabel!
+    @IBOutlet weak var tweetLabel: UITextView!
+    @IBOutlet weak var screenameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        thumbImageView.layer.cornerRadius = 22
+        thumbImageView.layer.borderWidth = 1.0
+        thumbImageView.layer.masksToBounds = false
+        thumbImageView.layer.borderColor = UIColor.white.cgColor
         thumbImageView.clipsToBounds = true
-        thumbImageView.layer.cornerRadius = 10
-        
-        preservesSuperviewLayoutMargins = false
-        layoutMargins = .zero
+
+        let padding = tweetLabel.textContainer.lineFragmentPadding
+        tweetLabel.textContainerInset = UIEdgeInsetsMake(0, -padding, 0, -padding)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -35,6 +39,7 @@ class TweetCell: UITableViewCell {
             tweetNameLabel.text = tweet.user!.name
             tweetLabel.text = tweet.text
             timestampLabel.text = tweet.timestamp?.description
+            screenameLabel.text = "@\(tweet.user!.screenname!)"
             
             if let imageURL = tweet.user!.profileUrl {
                 thumbImageView.setImageWith(imageURL)

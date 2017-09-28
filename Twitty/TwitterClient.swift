@@ -69,7 +69,7 @@ class TwitterClient: BDBOAuth1SessionManager {
         })
     }
     
-    func homeTimeline(maxId: AnyObject?, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
+    func homeTimeline(maxId: IntMax?, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
         var params: [String: AnyObject] = [:]
         if let maxId = maxId {
             params["max_id"] = maxId as AnyObject
@@ -87,11 +87,12 @@ class TwitterClient: BDBOAuth1SessionManager {
 
     }
     
-    func composeTweet(_ status: String, replyStatusId: AnyObject?, success: @escaping (Tweet) -> (), failure: @escaping (Error?) -> ()) {
+    func composeTweet(_ status: String, replyStatusId: IntMax?, success: @escaping (Tweet) -> (), failure: @escaping (Error?) -> ()) {
         var parameters = ["status": status as AnyObject]
-        if let replyStatusId = replyStatusId {
+        if replyStatusId != nil {
             parameters["in_reply_to_status_id"] = replyStatusId as AnyObject
         }
+        print(parameters)
         post("/1.1/statuses/update.json",
             parameters: parameters,
             progress: nil,
@@ -122,7 +123,6 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     func unfavoriteTweet(tweet: Tweet, success: @escaping (Tweet) -> (), failure: @escaping (Error?) -> ()) {
         let tweetId = tweet.id
-        print(tweetId)
         post("/1.1/favorites/destroy.json",
              parameters: [
                 "id": tweetId as AnyObject
@@ -139,8 +139,7 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     func retweet(tweet: Tweet, success: @escaping (Tweet) -> (), failure: @escaping (Error?) -> ()) {
         let tweetId = tweet.id
-        print(tweetId)
-        post("/1.1/statuses/retweet/\(tweet.id).json",
+        post("/1.1/statuses/retweet/\(tweetId!).json",
             parameters: nil,
             progress: nil,
             success: { (task, response) in
@@ -154,8 +153,7 @@ class TwitterClient: BDBOAuth1SessionManager {
     
     func unretweet(tweet: Tweet, success: @escaping (Tweet) -> (), failure: @escaping (Error?) -> ()) {
         let tweetId = tweet.id
-        print(tweetId)
-        post("/1.1/statuses/unretweet/\(tweet.id).json",
+        post("/1.1/statuses/unretweet/\(tweetId!).json",
             parameters: nil,
             progress: nil,
             success: { (task, response) in
