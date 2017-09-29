@@ -2,7 +2,7 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "icons8-RetweetColor_50.png",
+      "filename" : "icons8-Retweet_50.png",
       "scale" : "1x"
     },
     {
@@ -12,7 +12,7 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "icons8-Retweet_500.png",
+      "filename" : "icons8-Retweet_100-1.png",
       "scale" : "3x"
     }
   ],

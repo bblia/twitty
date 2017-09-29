@@ -35,10 +35,8 @@ class Tweet: NSObject {
             let formatter = DateFormatter()
             formatter.dateFormat = "EEE MMM d H:mm:ss Z y"
             let timestampDate = formatter.date(from: timestampString)
-            
-            let dateFormatterPrint = DateFormatter()
-            dateFormatterPrint.dateFormat = "MMM dd, yyyy"
-            self.timestamp = dateFormatterPrint.string(from: timestampDate!)
+            let dateFormatter = DateFormatter()
+            self.timestamp = dateFormatter.timeSince(from: timestampDate! as NSDate, numericDates: true)  // Just now
         }
         
         if let user = dictionary["user"] as? NSDictionary {

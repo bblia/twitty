@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ComposeViewControllerDelegate, UIScrollViewDelegate {
+class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ComposeViewControllerDelegate, UIScrollViewDelegate, TweetCellDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     var tweets: [Tweet]!
@@ -40,6 +40,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "TweetCell", for: indexPath) as! TweetCell
         cell.selectionStyle = .none
         cell.tweet = tweets![indexPath.row]
+        cell.delegate = self
         return cell
     }
     
@@ -115,6 +116,24 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         }, failure: { (error: Error) ->() in
             print(error.localizedDescription)
         })
+    }
+    
+    func replyCallback(tweetCell: TweetCell, tweet: Tweet) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let navController = storyBoard.instantiateViewController(withIdentifier: "ComposeViewController") as! UINavigationController
+        let composeVc = navController.viewControllers.first as! ComposeViewController
+        composeVc.replyTo = tweet
+        self.present(navController, animated: true, completion: nil)
+    }
+    
+    func retweetCallback(tweetCell: TweetCell, tweet: Tweet) {
+        let indexPath = tableView.indexPath(for: tweetCell)!
+        tweets[indexPath.row] = tweet
+    }
+    
+    func likeCallback(tweetCell: TweetCell, tweet: Tweet) {
+        let indexPath = tableView.indexPath(for: tweetCell)!
+        tweets[indexPath.row] = tweet
     }
 
 }

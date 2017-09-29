@@ -14,6 +14,7 @@ class User: NSObject {
     var screenname: String!
     var profileUrl: URL?
     var tagline: String?
+    var verified: Bool
     
     var dictionary: NSDictionary
     static let userDidLogoutNotification = "UserDidLogout"
@@ -24,6 +25,7 @@ class User: NSObject {
         
         name = dictionary["name"] as? String
         screenname = dictionary["screen_name"] as! String
+        verified = dictionary["verified"] as! Bool
         
         let profileUrlString = dictionary["profile_image_url_https"] as? String
         if let profileUrlString = profileUrlString {

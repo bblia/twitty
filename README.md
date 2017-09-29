@@ -2,7 +2,7 @@
 
 **Twitty** is a basic twitter app to read and compose tweets from the [Twitter API](https://apps.twitter.com/).
 
-Time spent: **8** hours spent in total
+Time spent: **16** hours spent in total
 
 ## User Stories
 
@@ -27,10 +27,14 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [x] UI Improvements to follow Twitter design more closely
 - [x] Use colored/filled in icons for retweet and favorite after you
   perform the action
 - [x] Highlight links in tweets
+- [x] Reply, like, retweet directly from tweets on timeline + update
+  count
+- [x] Friendly date formatting similar to actual Twitter
+- [x] Show verified badge for verified accounts
+- [x] Display retweeted items as actual Twitter does
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
@@ -51,7 +55,7 @@ Describe any challenges encountered while building the app.
 
 ## License
 
-    Copyright [yyyy] [name of copyright owner]
+    Copyright [2017] [Lia Zadoyan]
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.

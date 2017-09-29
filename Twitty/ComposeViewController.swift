@@ -44,6 +44,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+   
+    
 
     func textViewDidChange(_ textView: UITextView) {
         let numberOfChars = textView.text.characters.count
@@ -79,5 +81,4 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
     @IBAction func onCancelButton(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-
 }
