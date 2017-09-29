@@ -19,7 +19,7 @@ class Tweet: NSObject {
     var favorited: Bool
     var retweeted: Bool
     var retweetedStatus: NSDictionary?
-
+    var longTimestamp: String?
     
     init(dictionary: NSDictionary) {
         text = dictionary["text"] as? String
@@ -36,7 +36,9 @@ class Tweet: NSObject {
             formatter.dateFormat = "EEE MMM d H:mm:ss Z y"
             let timestampDate = formatter.date(from: timestampString)
             let dateFormatter = DateFormatter()
-            self.timestamp = dateFormatter.timeSince(from: timestampDate! as NSDate, numericDates: true)  // Just now
+            self.timestamp = dateFormatter.timeSince(from: timestampDate! as NSDate, numericDates: true)
+            dateFormatter.dateFormat = "M/dd/yy, h:mm a"
+            self.longTimestamp = dateFormatter.string(from: timestampDate!)
         }
         
         if let user = dictionary["user"] as? NSDictionary {

@@ -17,16 +17,11 @@ class DetailsViewController: UIViewController {
     @IBOutlet weak var timestampLabel: UILabel!
     @IBOutlet weak var retweetsLabel: UILabel!
     @IBOutlet weak var favoritesLabel: UILabel!
-    
-    @IBOutlet weak var replyButton: UIButton!
-    
+    @IBOutlet weak var verifiedBadge: UIImageView!
     @IBOutlet weak var retweetButton: UIButton!
-    
     @IBOutlet weak var likeButton: UIButton!
-    
     @IBOutlet weak var retweetedImage: UIImageView!
     @IBOutlet weak var retweetedNameLabel: UILabel!
-    
     @IBOutlet weak var topConstraint: NSLayoutConstraint!
     
     var tweet: Tweet!
@@ -37,7 +32,7 @@ class DetailsViewController: UIViewController {
         nameLabel.text = tweet.user?.name
         screennameLabel.text = ("@\((tweet.user?.screenname)!)")
         tweetLabel.text = tweet.text
-        timestampLabel.text = tweet.timestamp
+        timestampLabel.text = tweet.longTimestamp
         retweetsLabel.text = tweet.retweetCount.description
         favoritesLabel.text = tweet.favoritesCount.description
 
@@ -80,6 +75,10 @@ class DetailsViewController: UIViewController {
         } else {
             let btnImage = UIImage(named: "like")
             self.likeButton.setImage(btnImage, for: UIControlState.normal)
+        }
+        
+        if let verified = tweet.user?.verified {
+            verifiedBadge.isHidden = !verified
         }
     }
 
