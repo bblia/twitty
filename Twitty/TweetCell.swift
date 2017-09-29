@@ -15,6 +15,8 @@ class TweetCell: UITableViewCell {
     @IBOutlet weak var tweetNameLabel: UILabel!
     @IBOutlet weak var tweetLabel: UITextView!
     @IBOutlet weak var screenameLabel: UILabel!
+    @IBOutlet weak var retweetedLabel: UILabel!
+    @IBOutlet weak var retweetedImage: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,11 +40,26 @@ class TweetCell: UITableViewCell {
         didSet {
             tweetNameLabel.text = tweet.user!.name
             tweetLabel.text = tweet.text
-            timestampLabel.text = tweet.timestamp?.description
+            timestampLabel.text = tweet.timestamp
             screenameLabel.text = "@\(tweet.user!.screenname!)"
             
             if let imageURL = tweet.user!.profileUrl {
                 thumbImageView.setImageWith(imageURL)
+            }
+            
+            if let retweetedStatus = tweet.retweetedStatus {
+                retweetedLabel.isHidden = false
+                retweetedImage.isHidden = false
+                retweetedLabel.text = tweet.user!.name! + " retweeted"
+                let user = retweetedStatus["user"] as! NSDictionary
+                
+                tweetNameLabel.text = user["name"] as? String
+                tweetLabel.text = retweetedStatus["text"] as! String
+                screenameLabel.text = "@\(user["screen_name"]!)"
+                thumbImageView.setImageWith(URL(string: user["profile_image_url_https"] as! String)!)
+            } else {
+                retweetedLabel.isHidden = true
+                retweetedImage.isHidden = true
             }
         }
     }

@@ -24,6 +24,8 @@ class DetailsViewController: UIViewController {
     
     @IBOutlet weak var likeButton: UIButton!
     
+    @IBOutlet weak var retweetedImage: UIImageView!
+    @IBOutlet weak var retweetedNameLabel: UILabel!
     
     var tweet: Tweet!
     
@@ -43,6 +45,23 @@ class DetailsViewController: UIViewController {
         profileImageView.layer.masksToBounds = false
         profileImageView.layer.borderColor = UIColor.white.cgColor
         profileImageView.clipsToBounds = true
+        
+        if let retweetedStatus = tweet.retweetedStatus {
+            retweetedNameLabel.isHidden = false
+            retweetedImage.isHidden = false
+            retweetedNameLabel.text = tweet.user!.name! + " retweeted"
+            let user = retweetedStatus["user"] as! NSDictionary
+            
+            nameLabel.text = user["name"] as? String
+            tweetLabel.text = retweetedStatus["text"] as! String
+            screennameLabel.text = "@\(user["screen_name"]!)"
+            profileImageView.setImageWith(URL(string: user["profile_image_url_https"] as! String)!)
+        } else {
+            retweetedNameLabel.isHidden = true
+            retweetedImage.isHidden = true
+        }
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
