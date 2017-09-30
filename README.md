@@ -27,11 +27,9 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [x] Use colored/filled in icons for retweet and favorite after you
-  perform the action
+- [x] Use colored/filled in icons for retweet and favorite after you perform the action
 - [x] Highlight links in tweets
-- [x] Reply, like, retweet directly from tweets on timeline + update
-  count
+- [x] Reply, like, retweet directly from tweets on timeline + update count
 - [x] Friendly date formatting similar to actual Twitter
 - [x] Show verified badge for verified accounts
 - [x] Display retweeted items as actual Twitter does
@@ -44,9 +42,9 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 ## Video Walkthrough
 
-Here's a walkthrough of implemented user stories:
+<img src='https://github.com/bblia/twitty/blob/master/twitter.gif' alt='Gif 1' />
 
-<img src='' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/bblia/twitty/blob/master/twitter2.gif' alt='Gif 2' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
