@@ -2,7 +2,7 @@
 
 **Twitty** is a basic twitter app to read and compose tweets from the [Twitter API](https://apps.twitter.com/).
 
-Time spent: **16** hours spent in total
+Time spent: **18** hours spent in total
 
 ## User Stories
 
@@ -37,8 +37,8 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. trouble getting nested Tweet objects from a Tweet, had to cast as NSdictionary. 
+2. difference between embedding each view controller in a navigation view vs using show segue  
 
 ## Video Walkthrough
 
