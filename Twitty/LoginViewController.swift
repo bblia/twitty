@@ -12,7 +12,8 @@ import BDBOAuth1Manager
 class LoginViewController: UIViewController {
 
     @IBOutlet weak var loginButton: UIButton!
-    
+    var window: UIWindow?
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,7 +40,16 @@ class LoginViewController: UIViewController {
 
     @IBAction func onLoginClick(_ sender: Any) {
         TwitterClient.sharedInstance.login(success: { () -> () in
-            self.performSegue(withIdentifier: "loginSegue", sender: nil)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "HamburgerViewController")
+            let hamburgerViewController = vc as! HamburgerViewController
+            let menuViewController = storyboard.instantiateViewController(withIdentifier: "MenuViewController") as! MenuViewController
+            menuViewController.hamburgerViewController = hamburgerViewController
+            hamburgerViewController.menuViewController = menuViewController
+            
+            self.show(hamburgerViewController, sender: nil)
+
+            
         }) { (error: Error) in
             print("Error: \(error.localizedDescription)")
         }
