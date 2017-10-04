@@ -29,6 +29,8 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         tableView.insertSubview(refreshControl, at: 0)
         
         fetchData(refreshControl: refreshControl)
+        
+        setupImageInNavBar()
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,6 +75,24 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
                 })
             }
         }
+    }
+    
+    private func setupImageInNavBar() {
+        let containView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        let imageview = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        imageview.setImageWith((User.currentUser?.profileUrl)!)
+        imageview.contentMode = UIViewContentMode.scaleAspectFit
+        imageview.layer.cornerRadius = 15
+        imageview.layer.masksToBounds = true
+        containView.addSubview(imageview)
+        let leftBarButton = UIBarButtonItem(customView: containView)
+        
+        leftBarButton.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onImageSelected(sender:))))
+        self.navigationItem.leftBarButtonItem = leftBarButton
+    }
+    
+    func onImageSelected(sender: UIBarButtonItem) {
+        //TODO
     }
 
     

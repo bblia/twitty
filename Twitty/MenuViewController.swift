@@ -15,6 +15,12 @@ class MenuViewController: UIViewController {
     private var timelineViewController: UIViewController!
     private var accountsViewController: UIViewController!
     
+    @IBOutlet weak var profileThumbView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var screennameLabel: UILabel!
+    @IBOutlet weak var followingCount: UILabel!
+    @IBOutlet weak var followersCount: UILabel!
+    
     var viewControllers: [UIViewController] = []
     
     var hamburgerViewController: HamburgerViewController!
@@ -36,7 +42,18 @@ class MenuViewController: UIViewController {
         
         hamburgerViewController.contentViewController = viewControllers[2]
         
-        // Do any additional setup after loading the view.
+        
+        nameLabel.text = User.currentUser?.name
+        screennameLabel.text = ("@\(User.currentUser!.screenname!)")
+        followingCount.text = User.currentUser?.followingCount?.description
+        followersCount.text = User.currentUser?.followersCount?.description
+        
+        profileThumbView.layer.cornerRadius = 22
+        profileThumbView.layer.borderWidth = 1.0
+        profileThumbView.layer.masksToBounds = false
+        profileThumbView.layer.borderColor = UIColor.white.cgColor
+        profileThumbView.clipsToBounds = true
+        profileThumbView.setImageWith((User.currentUser?.profileUrl)!)
     }
 
     override func didReceiveMemoryWarning() {
@@ -55,7 +72,7 @@ class MenuViewController: UIViewController {
     }
     */
     @IBAction func onProfileSelected(_ sender: Any) {
-        hamburgerViewController.contentViewController = viewControllers[0] 
+        hamburgerViewController.contentViewController = viewControllers[0]
     }
     
     
@@ -74,4 +91,7 @@ class MenuViewController: UIViewController {
         hamburgerViewController.contentViewController = viewControllers[3]
     }
 
+    @IBAction func onSignOutSelected(_ sender: Any) {
+        TwitterClient.sharedInstance.logout()
+    }
 }

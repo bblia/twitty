@@ -19,6 +19,7 @@
 		11689F8C1F843E6B0051AB47 /* MentionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11689F8B1F843E6B0051AB47 /* MentionsViewController.swift */; };
 		11689F8E1F843E740051AB47 /* AccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11689F8D1F843E740051AB47 /* AccountsViewController.swift */; };
 		11689F901F84413E0051AB47 /* HamburgerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11689F8F1F84413E0051AB47 /* HamburgerViewController.swift */; };
+		11689F931F846DA90051AB47 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11689F921F846DA90051AB47 /* AvatarImageView.swift */; };
 		11A015841F7A088100F43AAF /* TwitterClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A015831F7A088100F43AAF /* TwitterClient.swift */; };
 		11A015861F7A146400F43AAF /* TweetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A015851F7A146400F43AAF /* TweetsViewController.swift */; };
 		11A0158B1F7A2B8600F43AAF /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A0158A1F7A2B8600F43AAF /* TweetCell.swift */; };
@@ -44,6 +45,7 @@
 		11689F8B1F843E6B0051AB47 /* MentionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MentionsViewController.swift; sourceTree = "<group>"; };
 		11689F8D1F843E740051AB47 /* AccountsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
 		11689F8F1F84413E0051AB47 /* HamburgerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HamburgerViewController.swift; sourceTree = "<group>"; };
+		11689F921F846DA90051AB47 /* AvatarImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
 		11A015831F7A088100F43AAF /* TwitterClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwitterClient.swift; sourceTree = "<group>"; };
 		11A015851F7A146400F43AAF /* TweetsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetsViewController.swift; sourceTree = "<group>"; };
 		11A0158A1F7A2B8600F43AAF /* TweetCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TweetCell.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				11A0158A1F7A2B8600F43AAF /* TweetCell.swift */,
+				11689F921F846DA90051AB47 /* AvatarImageView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -202,6 +205,7 @@
 				TargetAttributes = {
 					114E47A61F79CB5C0011FB78 = {
 						CreatedOnToolsVersion = 8.3.3;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -311,6 +315,7 @@
 				114E47BD1F79CCC40011FB78 /* LoginViewController.swift in Sources */,
 				11A015861F7A146400F43AAF /* TweetsViewController.swift in Sources */,
 				11A015841F7A088100F43AAF /* TwitterClient.swift in Sources */,
+				11689F931F846DA90051AB47 /* AvatarImageView.swift in Sources */,
 				11689F8E1F843E740051AB47 /* AccountsViewController.swift in Sources */,
 				114E47AB1F79CB5C0011FB78 /* AppDelegate.swift in Sources */,
 			);
@@ -436,11 +441,13 @@
 			baseConfigurationReference = 0B7C1556B9C9224F53287272 /* Pods-Twitty.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				INFOPLIST_FILE = Twitty/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = liazadoyan.Twitty;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -450,6 +457,7 @@
 			baseConfigurationReference = CA9C978F3B647821F69FD720 /* Pods-Twitty.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				INFOPLIST_FILE = Twitty/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
