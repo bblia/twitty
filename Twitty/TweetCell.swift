@@ -12,6 +12,7 @@ import UIKit
     @objc func replyCallback(tweetCell: TweetCell, tweet: Tweet)
     @objc func likeCallback(tweetCell: TweetCell, tweet: Tweet)
     @objc func retweetCallback(tweetCell: TweetCell, tweet: Tweet)
+    @objc func imageTapCallback(tweetCell: TweetCell, tweet: Tweet)
 }
 
 class TweetCell: UITableViewCell {
@@ -39,12 +40,18 @@ class TweetCell: UITableViewCell {
         super.awakeFromNib()
         thumbImageView.layer.cornerRadius = 22
         thumbImageView.layer.borderWidth = 1.0
+       
+        
         thumbImageView.layer.masksToBounds = false
         thumbImageView.layer.borderColor = UIColor.white.cgColor
         thumbImageView.clipsToBounds = true
 
         let padding = tweetLabel.textContainer.lineFragmentPadding
         tweetLabel.textContainerInset = UIEdgeInsetsMake(0, -padding, 0, -padding)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(TweetCell.onTappedImage))
+        thumbImageView.addGestureRecognizer(tap)
+        thumbImageView.isUserInteractionEnabled = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -53,6 +60,7 @@ class TweetCell: UITableViewCell {
     
     var tweet: Tweet! {
         didSet {
+            print(tweet)
             tweetNameLabel.text = tweet.user!.name
             tweetLabel.text = tweet.text
             timestampLabel.text = tweet.timestamp
@@ -100,6 +108,10 @@ class TweetCell: UITableViewCell {
                 topConstraint.constant = -10
             }
         }
+    }
+    
+    func onTappedImage() {
+        delegate?.imageTapCallback(tweetCell: self, tweet: self.tweet)
     }
     
     

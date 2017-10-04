@@ -32,6 +32,15 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         
         setupImageInNavBar()
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.tintColor = UIColor.black
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -45,6 +54,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         cell.delegate = self
         return cell
     }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tweets?.count ?? 0
@@ -154,6 +164,18 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     func likeCallback(tweetCell: TweetCell, tweet: Tweet) {
         let indexPath = tableView.indexPath(for: tweetCell)!
         tweets[indexPath.row] = tweet
+    }
+    
+    func imageTapCallback(tweetCell: TweetCell, tweet: Tweet) {
+        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let navController = storyBoard.instantiateViewController(withIdentifier: "ProfileNavigationController") as! ProfileViewController
+        navController.user = tweet.user
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.backgroundColor = nil
+        self.navigationController?.navigationBar.isTranslucent = true
+        show(navController, sender: self)
     }
 
 }
