@@ -22,7 +22,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, UITableView
     @IBOutlet weak var tweetsCount: UILabel!
     
     @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var profileImage: AvatarImageView!
+    @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var screennameLabel: UILabel!
     @IBOutlet var headerImageView:UIImageView!
@@ -46,6 +46,10 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, UITableView
         tweetsTableView.dataSource = self
         tweetsTableView.rowHeight = UITableViewAutomaticDimension
         tweetsTableView.estimatedRowHeight = 140
+        
+        profileImage.layer.cornerRadius = 25.0
+        profileImage.layer.borderColor = UIColor.white.cgColor
+        profileImage.layer.borderWidth = 3.0
         
         TwitterClient.sharedInstance.userTimeline(username: user.screenname!, success: {(tweets: [Tweet]) -> () in
             self.tweets = tweets
@@ -108,12 +112,20 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, UITableView
             headerTransform = CATransform3DScale(headerTransform, 1.0 + headerScaleFactor, 1.0 + headerScaleFactor, 0)
             
             header.layer.transform = headerTransform
+           
+            if (headerBlurImageView != nil) {
+                headerBlurImageView.removeFromSuperview()
+            }
+            headerBlurImageView = UIImageView(frame: header.bounds)
+            headerBlurImageView?.alpha = min (1.0, -(offset / (header.frame.height / 2)))
+            headerBlurImageView?.setImageWith(user.profileBackgroundUrl!)
+            addBlurEffect(image: headerBlurImageView)
+            header.insertSubview(headerBlurImageView, belowSubview: headerNameLabel)
         } else {
             headerTransform = CATransform3DTranslate(headerTransform, 0, max(-offset_HeaderStop, -offset), 0)
             let labelTransform = CATransform3DMakeTranslation(0, max(-distance_W_LabelHeader, offset_B_LabelHeader - offset), 0)
             headerNameLabel.layer.transform = labelTransform
             headerBlurImageView?.alpha = min (1.0, (offset - offset_B_LabelHeader)/distance_W_LabelHeader)
-            
             
             let avatarScaleFactor = (min(offset_HeaderStop, offset)) / profileImage.bounds.height / 1.8 // Slow down the animation
             let avatarSizeVariation = ((profileImage.bounds.height * (1.0 + avatarScaleFactor)) - profileImage.bounds.height) / 2.0
@@ -141,6 +153,7 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, UITableView
                     addBlurEffect(image: headerBlurImageView)
                     header.insertSubview(headerBlurImageView, belowSubview: headerNameLabel)
                     header.layer.zPosition = 2
+                    print(headerBlurImageView!.alpha.description)
                 }
             }
         }
