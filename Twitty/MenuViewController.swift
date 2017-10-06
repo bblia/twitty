@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import XLPagerTabStrip
 
-class MenuViewController: UIViewController {
+class MenuViewController: UIViewController{
 
     private var profileViewController: UIViewController!
     private var mentionsViewController: UIViewController!

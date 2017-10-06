@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import XLPagerTabStrip
 
-class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ComposeViewControllerDelegate, UIScrollViewDelegate, TweetCellDelegate {
+class TweetsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ComposeViewControllerDelegate, UIScrollViewDelegate, TweetCellDelegate, IndicatorInfoProvider {
     
     @IBOutlet weak var tableView: UITableView!
     var tweets: [Tweet]!
@@ -17,7 +18,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.layoutIfNeeded()
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -176,6 +177,10 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         self.navigationController?.navigationBar.backgroundColor = nil
         self.navigationController?.navigationBar.isTranslucent = true
         show(navController, sender: self)
+    }
+    
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: "Tweets")
     }
 
 }

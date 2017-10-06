@@ -18,8 +18,8 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [ ] Profile Page
-   - [ ] Implement the paging view for the user description.
+- [x] Profile Page
+   - [x] Implement the paging view for the user description.
    - [ ] As the paging view moves, increase the opacity of the background screen. See the actual Twitter app for this effect
    - [x] Pulling down the profile page should blur and resize the header image.
 - [ ] Account switching
@@ -31,7 +31,8 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] List anything else that you can get done to improve the app functionality!
+- [ ] Format tweet/follower/likes counts similar to twitter (22k, 5k, etc)
+- [x] Mimic the twitter profile animation for scrolling up (collapse name into navigation bar and blur image)
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 

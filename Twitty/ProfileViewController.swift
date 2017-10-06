@@ -14,7 +14,7 @@ let distance_W_LabelHeader:CGFloat = 35.0 // The distance between the bottom of 
 
 class ProfileViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
 
-    @IBOutlet weak var tweetsTableView: UITableView!
+   // @IBOutlet weak var tweetsTableView: UITableView!
     @IBOutlet weak var header: UIView!
     @IBOutlet weak var headerNameLabel: UILabel!
     @IBOutlet weak var followingCount: UILabel!
@@ -27,6 +27,8 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, UITableView
     @IBOutlet weak var screennameLabel: UILabel!
     @IBOutlet var headerImageView:UIImageView!
     @IBOutlet var headerBlurImageView:UIImageView!
+    
+    @IBOutlet weak var containerView: UIView!
     
     var user: User! = User.currentUser
     var tweets: [Tweet]!
@@ -42,23 +44,30 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, UITableView
         followersCount.text = user.followersCount?.description
         followingCount.text = user.followingCount?.description
         tweetsCount.text = user.tweetsCount?.description
-        tweetsTableView.delegate = self
-        tweetsTableView.dataSource = self
-        tweetsTableView.rowHeight = UITableViewAutomaticDimension
-        tweetsTableView.estimatedRowHeight = 140
+//        tweetsTableView.delegate = self
+//        tweetsTableView.dataSource = self
+//        tweetsTableView.rowHeight = UITableViewAutomaticDimension
+//        tweetsTableView.estimatedRowHeight = 140
         
         profileImage.layer.cornerRadius = 25.0
         profileImage.layer.borderColor = UIColor.white.cgColor
         profileImage.layer.borderWidth = 3.0
         
-        TwitterClient.sharedInstance.userTimeline(username: user.screenname!, success: {(tweets: [Tweet]) -> () in
-            self.tweets = tweets
-            self.tweetsTableView.reloadData()
-            //refreshControl.endRefreshing()
-            
-        }, failure: { (error: Error) ->() in
-            print(error.localizedDescription)
-        })
+//        TwitterClient.sharedInstance.userTimeline(username: user.screenname!, success: {(tweets: [Tweet]) -> () in
+//            self.tweets = tweets
+//            //self.tweetsTableView.reloadData()
+//            //refreshControl.endRefreshing()
+//            
+//        }, failure: { (error: Error) ->() in
+//            print(error.localizedDescription)
+//        })
+        
+        let childViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewPagerController") as! ViewPagerController
+        childViewController.user = self.user
+        self.addChildViewController(childViewController)
+        self.containerView.addSubview(childViewController.view)
+        childViewController.view.frame = (childViewController.view.superview?.bounds)!;
+        childViewController.didMove(toParentViewController: self)
     }
     
     override func viewDidAppear(_ animated: Bool) {

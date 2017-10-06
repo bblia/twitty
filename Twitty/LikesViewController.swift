@@ -1,15 +1,15 @@
 //
-//  MentionsViewController.swift
+//  TweetsViewController.swift
 //  Twitty
 //
-//  Created by Lia Zadoyan on 10/3/17.
+//  Created by Lia Zadoyan on 9/25/17.
 //  Copyright © 2017 Lia Zadoyan. All rights reserved.
 //
 
 import UIKit
 import XLPagerTabStrip
 
-class MentionsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, TweetCellDelegate {
+class LikesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, TweetCellDelegate, IndicatorInfoProvider {
     
     @IBOutlet weak var tableView: UITableView!
     var tweets: [Tweet]!
@@ -60,7 +60,7 @@ class MentionsViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func fetchData() {
-        TwitterClient.sharedInstance.mentionsTimeline(username: user.screenname, success: {(tweets: [Tweet]) -> () in
+        TwitterClient.sharedInstance.likesTimeline(username: user.screenname, success: {(tweets: [Tweet]) -> () in
             self.tweets = tweets
             self.tableView.reloadData()
             
@@ -98,4 +98,9 @@ class MentionsViewController: UIViewController, UITableViewDataSource, UITableVi
         self.navigationController?.navigationBar.isTranslucent = true
         show(navController, sender: self)
     }
+    
+    func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
+        return IndicatorInfo(title: "Likes")
+    }
+    
 }
