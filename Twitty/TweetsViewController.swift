@@ -15,6 +15,7 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     var tweets: [Tweet]!
     
     var isMoreDataLoading = false
+    var halfModalTransitioningDelegate: HalfModalTransitioningDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +42,8 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.tintColor = UIColor.black
+        self.navigationController?.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName:UIColor.black]  // Title's text color
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -98,12 +101,19 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
         containView.addSubview(imageview)
         let leftBarButton = UIBarButtonItem(customView: containView)
         
-        leftBarButton.customView?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(onImageSelected(sender:))))
+        leftBarButton.customView?.addGestureRecognizer(UILongPressGestureRecognizer(target: self, action: #selector(onImageSelected(sender:))))
         self.navigationItem.leftBarButtonItem = leftBarButton
     }
     
-    func onImageSelected(sender: UIBarButtonItem) {
-        //TODO
+    func onImageSelected(sender: UILongPressGestureRecognizer) {
+        if (sender.state == UIGestureRecognizerState.began) {
+         //   let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+         //   let navController = storyBoard.instantiateViewController(withIdentifier: "AccountsNavigationController") as! AccountsNavController
+
+            //self.halfModalTransitioningDelegate = HalfModalTransitioningDelegate(viewController: self, presentingViewController: navController)
+            performSegue(withIdentifier: "accountsSegue", sender: self)
+        }
+        
     }
 
     
@@ -118,12 +128,17 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
             let indexPath = tableView.indexPath(for: cell)
             vc.tweet = tweets![indexPath!.row]
         }
-        
-        if let navVC = segue.destination as? UINavigationController {
-            let composeVc = navVC.viewControllers.first as! ComposeViewController
-            composeVc.delegate = self
+        if segue.identifier == "accountsSegue" {
+            self.halfModalTransitioningDelegate = HalfModalTransitioningDelegate(viewController: self, presentingViewController: segue.destination)
+            
+            segue.destination.modalPresentationStyle = .custom
+            segue.destination.transitioningDelegate = self.halfModalTransitioningDelegate
+        } else {
+            if let navVC = segue.destination as? UINavigationController {
+                let composeVc = navVC.viewControllers.first as! ComposeViewController
+                composeVc.delegate = self
+            }
         }
-
         
     }
     
@@ -182,5 +197,4 @@ class TweetsViewController: UIViewController, UITableViewDataSource, UITableView
     func indicatorInfo(for pagerTabStripController: PagerTabStripViewController) -> IndicatorInfo {
         return IndicatorInfo(title: "Tweets")
     }
-
 }

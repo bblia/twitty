@@ -74,7 +74,6 @@ class TwitterClient: BDBOAuth1SessionManager {
         if let maxId = maxId {
             params["max_id"] = maxId as AnyObject
         }
-        print(params)
         get("1.1/statuses/home_timeline.json", parameters: params, progress: nil, success: { (task: URLSessionDataTask, response: Any?) -> Void in
             let dictionaries = response as! [NSDictionary]
             
@@ -142,7 +141,6 @@ class TwitterClient: BDBOAuth1SessionManager {
         if replyStatusId != nil {
             parameters["in_reply_to_status_id"] = replyStatusId as AnyObject
         }
-        print(parameters)
         post("/1.1/statuses/update.json",
             parameters: parameters,
             progress: nil,

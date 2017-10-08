@@ -1,6 +1,6 @@
 # Project 4 - *Twitty-Redux*
 
-Time spent: **2** hours spent in total
+Time spent: **20** hours spent in total
 
 ## User Stories
 
@@ -23,7 +23,7 @@ The following **optional** features are implemented:
    - [ ] As the paging view moves, increase the opacity of the background screen. See the actual Twitter app for this effect
    - [x] Pulling down the profile page should blur and resize the header image.
 - [ ] Account switching
-   - [ ] Long press on tab bar to bring up Account view with animation
+   - [x] Long press on tab bar to bring up Account view with animation
    - [ ] Tap account to switch to
    - [ ] Include a plus button to Add an Account
    - [ ] Swipe to delete an account
@@ -31,8 +31,12 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [ ] Format tweet/follower/likes counts similar to twitter (22k, 5k, etc)
+- [x] Format tweet/follower/likes counts similar to twitter (22k, 5k, etc)
 - [x] Mimic the twitter profile animation for scrolling up (collapse name into navigation bar and blur image)
+- [x] Mimic the twitter accounts animation for a modal view controller
+  that you can expand to full view.
+- [x] Mimic the twitter hamburger menu and overall UI (black and white
+  with blue accents)
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 

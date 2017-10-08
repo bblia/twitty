@@ -60,13 +60,12 @@ class TweetCell: UITableViewCell {
     
     var tweet: Tweet! {
         didSet {
-            print(tweet)
             tweetNameLabel.text = tweet.user!.name
             tweetLabel.text = tweet.text
             timestampLabel.text = tweet.timestamp
             screenameLabel.text = "@\(tweet.user!.screenname!)"
-            retweetsCountLabel.text = tweet.retweetCount.description
-            likesCountLabel.text = tweet.favoritesCount.description
+            retweetsCountLabel.text = formatPoints(from: tweet.retweetCount)
+            likesCountLabel.text = formatPoints(from: tweet.favoritesCount)
             
             if let imageURL = tweet.user!.profileUrl {
                 thumbImageView.setImageWith(imageURL)
@@ -169,6 +168,16 @@ class TweetCell: UITableViewCell {
             }
         }
         delegate?.likeCallback(tweetCell: self, tweet: tweet)
+    }
+    
+    func formatPoints(from: Int) -> String {
+        let number = Double(from)
+        let thousand = number / 1000
+        let million = number / 1000000
+        
+        if million >= 1.0 { return "\(round(million*10)/10)M" }
+        else if thousand >= 1.0 { return "\(round(thousand*10)/10)K" }
+        else { return "\(Int(number))"}
     }
     
 }

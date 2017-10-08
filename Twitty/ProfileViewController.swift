@@ -14,7 +14,6 @@ let distance_W_LabelHeader:CGFloat = 35.0 // The distance between the bottom of 
 
 class ProfileViewController: UIViewController, UIScrollViewDelegate, UITableViewDelegate, UITableViewDataSource {
 
-   // @IBOutlet weak var tweetsTableView: UITableView!
     @IBOutlet weak var header: UIView!
     @IBOutlet weak var headerNameLabel: UILabel!
     @IBOutlet weak var followingCount: UILabel!
@@ -41,26 +40,13 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, UITableView
         nameLabel.text = user.name
         screennameLabel.text = user.screenname
         headerNameLabel.text = user.name
-        followersCount.text = user.followersCount?.description
-        followingCount.text = user.followingCount?.description
-        tweetsCount.text = user.tweetsCount?.description
-//        tweetsTableView.delegate = self
-//        tweetsTableView.dataSource = self
-//        tweetsTableView.rowHeight = UITableViewAutomaticDimension
-//        tweetsTableView.estimatedRowHeight = 140
+        followersCount.text = formatPoints(from:user.followersCount!)
+        followingCount.text = formatPoints(from: user.followingCount!)
+        tweetsCount.text = formatPoints(from:user.tweetsCount!)
         
         profileImage.layer.cornerRadius = 25.0
         profileImage.layer.borderColor = UIColor.white.cgColor
         profileImage.layer.borderWidth = 3.0
-        
-//        TwitterClient.sharedInstance.userTimeline(username: user.screenname!, success: {(tweets: [Tweet]) -> () in
-//            self.tweets = tweets
-//            //self.tweetsTableView.reloadData()
-//            //refreshControl.endRefreshing()
-//            
-//        }, failure: { (error: Error) ->() in
-//            print(error.localizedDescription)
-//        })
         
         let childViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ViewPagerController") as! ViewPagerController
         childViewController.user = self.user
@@ -173,6 +159,16 @@ class ProfileViewController: UIViewController, UIScrollViewDelegate, UITableView
     
     override var preferredStatusBarStyle: UIStatusBarStyle{
         return UIStatusBarStyle.lightContent
+    }
+    
+    func formatPoints(from: Int) -> String {
+        let number = Double(from)
+        let thousand = number / 1000
+        let million = number / 1000000
+        
+        if million >= 1.0 { return "\(round(million*10)/10)M" }
+        else if thousand >= 1.0 { return "\(round(thousand*10)/10)K" }
+        else { return "\(Int(number))"}
     }
 
 

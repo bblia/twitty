@@ -17,15 +17,18 @@ class ViewPagerController: ButtonBarPagerTabStripViewController {
         // buttonBar minimumInteritemSpacing value, note that button bar extends from UICollectionView
         
         // selected bar view is created programmatically so it's important to set up the following 2 properties properly
-        settings.style.selectedBarBackgroundColor = UIColor.black
+        settings.style.selectedBarBackgroundColor = UIColor(colorLiteralRed: 0, green: 172.0/255.0, blue: 237.0/255.0, alpha: 1.0)
         settings.style.selectedBarHeight = 5
         
         settings.style.buttonBarItemBackgroundColor = UIColor.white
         // helps to determine the cell width, it represent the space before and after the title label
-        settings.style.buttonBarItemTitleColor = UIColor.black
+        settings.style.buttonBarItemTitleColor = UIColor(colorLiteralRed: 0, green: 172.0/255.0, blue: 237.0/255.0, alpha: 1.0)
         // in case the barView items do not fill the screen width this property stretch the cells to fill the screen
         settings.style.buttonBarItemsShouldFillAvailiableWidth = true
         settings.style.buttonBarRightContentInset = CGFloat(0)
+        
+        settings.style.buttonBarItemFont = UIFont.systemFont(ofSize: 15)
+
 
         super.viewDidLoad()
 

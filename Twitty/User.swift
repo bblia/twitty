@@ -26,7 +26,6 @@ class User: NSObject {
     
     init(dictionary: NSDictionary) {
         self.dictionary = dictionary
-        print(dictionary)
         name = dictionary["name"] as? String
         screenname = dictionary["screen_name"] as! String
         verified = dictionary["verified"] as! Bool
@@ -76,4 +75,5 @@ class User: NSObject {
             defaults.synchronize()
         }
     }
+
 }
