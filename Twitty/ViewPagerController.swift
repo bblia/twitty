@@ -44,10 +44,10 @@ class ViewPagerController: ButtonBarPagerTabStripViewController {
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        let timelineViewController = storyboard.instantiateViewController(withIdentifier: "TweetsViewController") as! TweetsViewController
+        let timelineViewController = storyboard.instantiateViewController(withIdentifier: "UserTweetsViewController") as! UserTweetsViewController
+        timelineViewController.user = self.user
         let likesViewController = storyboard.instantiateViewController(withIdentifier: "LikesViewController") as! LikesViewController
         likesViewController.user = self.user
-        
         return [timelineViewController, likesViewController]
     }
 

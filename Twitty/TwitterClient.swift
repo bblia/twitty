@@ -99,7 +99,6 @@ class TwitterClient: BDBOAuth1SessionManager {
         }, failure: { (task: URLSessionDataTask?, error: Error) in
             failure(error)
         })
-        
     }
     
     func likesTimeline(username: String?, success: @escaping ([Tweet]) -> (), failure: @escaping (Error) -> ()) {
